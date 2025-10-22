@@ -1,11 +1,603 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cameroun Explorer — Accueil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* -------------------- RESET -------------------- */
+    :root{
+      --blue:#0d6efd;       /* couleur principale */
+      --blue-dark:#0b5ed7;
+      --muted:#6c757d;
+      --bg:#f6f9ff;
+      --card:#ffffff;
+      --glass: rgba(255,255,255,0.06);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:'Poppins',sans-serif;
+      background:var(--bg);
+      color:#0b1a2b;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+    a{color:inherit; text-decoration: none;}
+    img{max-width:100%;display:block}
+
+    /* -------------------- NAVBAR -------------------- */
+    .navbar{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      height:68px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 28px;
+      z-index:1000;
+      background:linear-gradient(180deg, rgba(13,110,253,0.95), rgba(13,110,253,0.85));
+      color:white;
+      box-shadow:0 6px 18px rgba(13,110,253,0.08);
+      backdrop-filter: blur(6px);
+    }
+    .navbar .left{display:flex;gap:24px;align-items:center}
+    .logo{
+      font-weight:700;
+      font-size:1.25rem;
+      letter-spacing:0.2px;
+    }
+    .nav-links{display:flex;gap:18px;list-style:none;align-items:center}
+    .nav-links a{color:white;opacity:0.95;padding:8px 10px;border-radius:8px;font-weight:900}
+    .nav-links a:hover{background:rgba(255,255,255,0.08)}
+    .nav-cta{background:white;color:var(--blue);padding:8px 14px;border-radius:28px;font-weight:600;box-shadow:0 6px 14px rgba(13,110,253,0.12)}
+    .nav-cta:hover{transform:translateY(-2px);transition:all .18s ease-in-out}
+
+    /* mobile menu button */
+    .burger{display:none;width:40px;height:40px;border-radius:10px;align-items:center;justify-content:center;background:rgba(255,255,255,0.06);cursor:pointer}
+    .burger svg{fill:white}
+
+    /* -------------------- HERO (parallax-like) -------------------- */
+    .hero{
+      min-height:88vh;
+      background:
+        linear-gradient(180deg, rgba(3,37,76,0.45), rgba(3,37,76,0.55)),
+        url('bg.jpg') center/cover no-repeat fixed;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:100px 20px 60px;
+      color:white;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero .container{
+      width:100%;
+      max-width:1180px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:36px;
+      align-items:center;
+    }
+    .hero h1{
+      font-size:2.6rem;
+      line-height:1.05;
+      margin-bottom:12px;
+      font-weight:700;
+      text-shadow: 0 6px 28px rgba(2,30,75,0.6);
+    }
+    .hero p{color:rgba(255,255,255,0.92);margin-bottom:18px;font-weight:500}
+    .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap}
+
+    /* -------------------- SEARCH CARD -------------------- */
+    .search-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.98));
+      color: #0b1a2b;
+      border-radius:14px;
+      padding:18px;
+      box-shadow:0 8px 28px rgba(2,30,75,0.12);
+      width:100%;
+    }
+    .search-card h3{font-size:1.05rem;margin-bottom:10px;font-weight:700;color:var(--blue-dark)}
+    .search-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .form-row{display:flex;gap:10px}
+    .field{background:#f8fbff;border:1px solid #e6f0ff;padding:10px;border-radius:10px;font-size:0.95rem;display:flex;flex-direction:column}
+    .field label{font-size:0.78rem;color:var(--muted);margin-bottom:6px}
+    .field input[type="text"], .field input[type="date"], .field select{border:0;background:transparent;outline:none;font-weight:600}
+    .field .small{font-size:0.85rem;color:var(--muted)}
+    .search-actions{display:flex;gap:10px;margin-top:12px}
+    .btn-primary{
+      background:var(--blue);color:white;padding:12px 16px;border-radius:10px;font-weight:700;border:0;cursor:pointer;flex:1;
+    }
+    .btn-secondary{
+      background:transparent;border:1px solid var(--blue);color:var(--blue);padding:10px 12px;border-radius:10px;font-weight:700;cursor:pointer;
+    }
+
+    /* -------------------- SECTIONS -------------------- */
+    .section{
+      padding:72px 20px;
+      max-width:1180px;
+      margin:0 auto;
+    }
+    .section .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px;gap:16px}
+    .section-title{font-size:1.6rem;font-weight:700}
+    .section-sub{color:var(--muted);font-size:0.98rem}
+
+    /* Destinations grid */
+    .destination-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap:20px;
+      margin-top:18px;
+    }
+    .card{
+      background:var(--card);
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 10px 30px rgba(11,26,43,0.06);
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(11,26,43,0.12)}
+    .card img{height:180px;object-fit:cover;width:100%}
+    .card-body{padding:14px}
+    .card-body h4{font-size:1.05rem;margin-bottom:8px}
+    .card-body p{font-size:0.95rem;color:var(--muted);margin-bottom:10px}
+    .tag{display:inline-block;padding:6px 10px;background:rgba(13,110,253,0.08);color:var(--blue);font-weight:600;border-radius:999px;font-size:0.85rem}
+    .btn-info{display:inline-block;padding:6px 10px;background:rgba(13,110,253,0.08);color:var(--blue);font-weight:600;border-radius:999px;font-size:0.85rem}
+    /* Experiences */
+    .experiences{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:18px}
+    .exp{
+      background:linear-gradient(180deg,#ffffff,#f7fbff);
+      padding:18px;border-radius:12px;box-shadow:0 8px 24px rgba(2,30,75,0.04);
+      display:flex;gap:12px;align-items:flex-start;
+    }
+    .exp svg{width:46px;height:46px;flex:0 0 46px;background:linear-gradient(180deg,var(--blue-strong, #0d6efd),var(--blue-dark));padding:8px;border-radius:10px;color:white}
+    .exp h4{font-size:1rem;margin-bottom:6px}
+    .exp p{font-size:0.92rem;color:var(--muted)}
+
+    /* Pourquoi nous choisir */
+    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:18px}
+    .feature{background:linear-gradient(180deg,#fff,#fbfdff);padding:16px;border-radius:12px;text-align:center;box-shadow:0 8px 24px rgba(2,30,75,0.03)}
+    .feature svg{width:40px;height:40px;margin-bottom:8px}
+    .feature h5{font-size:0.98rem;margin-bottom:6px}
+    .feature p{font-size:0.9rem;color:var(--muted)}
+
+    /* Témoignages */
+    .testimonials{display:flex;gap:18px;align-items:center}
+    .testimonial-card{background:linear-gradient(180deg,#fff,#fbfdff);padding:16px;border-radius:12px;min-width:280px;box-shadow:0 10px 28px rgba(2,30,75,0.05)}
+    .testimonial-card p{color:var(--muted);margin-bottom:12px}
+    .testimonial-meta{display:flex;gap:12px;align-items:center}
+    .avatar{width:48px;height:48px;border-radius:50%;background:#e9f2ff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:var(--blue)}
+    .meta-name{font-weight:700}
+    .meta-role{font-size:0.85rem;color:var(--muted)}
+
+    /* Footer */
+    footer.site-footer{
+      background:linear-gradient(180deg,#05204d,#01233f);
+      color:white;padding:36px 20px;margin-top:30px;border-top-left-radius:20px;border-top-right-radius:20px;
+    }
+    .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;max-width:1180px;margin:0 auto}
+    .socials a{display:inline-block;margin-right:10px;color:white;opacity:0.95}
+    .legal{margin-top:16px;color:rgba(255,255,255,0.8);font-size:0.9rem;text-align:center}
+
+    /* Chat button */
+    .chat-btn{
+      position:fixed;right:18px;bottom:18px;background:var(--blue);color:white;padding:12px 14px;border-radius:999px;z-index:1200;cursor:pointer;font-weight:700;display:flex;gap:10px;align-items:center
+    }
+
+    /* small screens */
+    @media (max-width:980px){
+      .hero .container{grid-template-columns:1fr}
+      .search-grid{grid-template-columns:1fr}
+      .nav-links{display:none}
+      .burger{display:flex}
+      .footer-grid{grid-template-columns:1fr}
+    }
+
+    /* animations */
+    .fade-up{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
+    .fade-up.in{opacity:1;transform:none}
+
+    /* small utilities */
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+  </style>
 </head>
 <body>
-    <h1>bonjour</h1>
+
+  <!-- NAVBAR -->
+  <header class="navbar" role="banner">
+    <div class="left">
+      <div class="logo">Cameroun Explorer</div>
+      <div class="burger" id="burger" aria-hidden="true">
+        <!-- simple burger icon -->
+        <svg width="18" height="12" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="2" rx="1"></rect><rect y="5" width="18" height="2" rx="1"></rect><rect y="10" width="18" height="2" rx="1"></rect></svg>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="nav-links" id="navLinks" role="navigation" aria-label="Menu principal">
+        <li><a href="#home">Accueil</a></li>
+        <li><a href="#a_propos">A propos</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <a class="nav-cta" href="#">Réserver un voyage</a>
+  </header>
+
+  <!-- HERO -->
+  <main id="home">
+    <section class="hero" aria-label="Bannière principale">
+      <div class="container">
+        <div class="hero-left fade-up" data-animate>
+          <h1>Explorez la beauté naturelle et culturelle du Cameroun</h1>
+          <p>Partez à la découverte du Mont Cameroun, des chutes spectaculaires, des parcs nationaux et des plages paradisiaques. Planifiez votre voyage en quelques clics.</p>
+
+          <div class="cta-row">
+            <a class="btn-secondary" href="#destinations">Voir les destinations</a>
+            <a class="btn-secondary" href="#experiences">Découvrir les expériences</a>
+          </div>
+
+          <div style="margin-top:18px" class="muted">Note moyenne des voyageurs : <strong>4.8 ★</strong> — Plus de <strong>12 000</strong> visites guidées</div>
+        </div>
+
+        <!-- search card -->
+        <aside class="search-card fade-up" data-animate>
+          <h3>Recherchez votre voyage</h3>
+          <form id="searchForm" onsubmit="return false;">
+            <div class="search-grid">
+              <div class="field">
+                <label for="destination">Destination</label>
+                <input id="destination" type="text" placeholder="Ex: Mont Cameroun, Kribi, Waza..." required>
+              </div>
+              <div class="field">
+                <label for="guests">Nombre de voyageurs</label>
+                <select id="guests">
+                  <option>1 personne</option>
+                  <option>2 personnes</option>
+                  <option>3 personnes</option>
+                  <option>4 personnes</option>
+                  <option>Plus de 4</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="date-depart">Date de départ</label>
+                <input id="date-depart" type="date" required>
+              </div>
+
+              <div class="field">
+                <label for="date-retour">Date de retour</label>
+                <input id="date-retour" type="date" required>
+              </div>
+            </div>
+
+            <div class="search-actions">
+              <button class="btn-primary" id="searchBtn" type="submit">Rechercher</button>
+              <button class="btn-secondary" id="exploreBtn" type="button">Explorer toutes les offres</button>
+            </div>
+            <div id="searchMsg" style="margin-top:10px;font-size:0.92rem;color:var(--muted);display:none"></div>
+          </form>
+        </aside>
+      </div>
+    </section>
+
+    <!-- DESTINATIONS -->
+    <section id="destinations" class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Destinations populaires</div>
+          <div class="section-sub">Les lieux incontournables sélectionnés par nos experts</div>
+        </div>
+        <div class="muted">Voir tout →</div>
+      </div>
+
+      <div class="destination-grid">
+        <article class="card fade-up" data-animate>
+          <img src="mont.jpeg" alt="Mont Cameroun — randonnée">
+          <div class="card-body">
+            <div class="tag">Aventure</div>
+            <h4>Mont Cameroun</h4>
+            <p>Ascension et vues spectaculaires — guide local inclus.</p>
+            <a class="btn-info" href="#" style="background:rgba(13,110,253,0.08);color:var(--blue)">En savoir plus</a>
+          </div>
+        </article>
+
+        <article class="card fade-up" data-animate>
+          <img src="chut.jpeg" alt="Chutes d'Ekom Nkam">
+          <div class="card-body">
+            <div class="tag">Nature</div>
+            <h4>Chutes d'Ekom Nkam</h4>
+            <p>Des cascades impressionnantes et une baignade rafraîchissante.</p>
+            <a class="btn-info" href="#">En savoir plus</a>
+          </div>
+        </article>
+
+        <article class="card fade-up" data-animate>
+          <img src="parc.jpeg" alt="Parc National de Waza">
+          <div class="card-body">
+            <div class="tag">Safari</div>
+            <h4>Parc National de Waza</h4>
+            <p>Safaris encadrés pour observer la faune dans son habitat naturel.</p>
+            <a class="btn-info" href="#">En savoir plus</a>
+          </div>
+        </article>
+
+        <article class="card fade-up" data-animate>
+          <img src="kribi.jpeg" alt="Plages de Kribi">
+          <div class="card-body">
+            <div class="tag">Plage</div>
+            <h4>Plages de Kribi</h4>
+            <p>Plages de sable fin, couchers de soleil et détente.</p>
+            <a class="btn-info" href="#">En savoir plus</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- EXPERIENCES -->
+    <section id="experiences" class="section" aria-labelledby="expTitle">
+      <div class="section-header">
+        <div>
+          <div id="expTitle" class="section-title">Expériences uniques</div>
+          <div class="section-sub">Activités et visites à ne pas manquer</div>
+        </div>
+        <div class="muted">Choisissez votre aventure</div>
+      </div>
+
+      <div class="experiences">
+        <div class="exp fade-up" data-animate>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 2L12 22" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <h4>Randonnée guidée</h4>
+            <p>Parcours adaptés à tous les niveaux avec guides certifiés.</p>
+          </div>
+        </div>
+
+        <div class="exp fade-up" data-animate>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M4 6H20M4 12H20M4 18H20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <h4>Visites culturelles</h4>
+            <p>Museums, artisans locaux et immersion culturelle authentique.</p>
+          </div>
+        </div>
+
+        <div class="exp fade-up" data-animate>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 2C9 7 6 9 2 11" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <h4>Safaris & Faune</h4>
+            <p>Observation responsable de la faune avec naturalistes.</p>
+          </div>
+        </div>
+
+        <div class="exp fade-up" data-animate>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 3L20 21H4L12 3Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <h4>Détente & Plages</h4>
+            <p>Plages privées, excursions en bateau et relaxation totale.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POURQUOI NOUS CHOISIR -->
+    <section id="why" class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Pourquoi nous choisir</div>
+          <div class="section-sub">Des garanties claires pour voyager l'esprit tranquille</div>
+        </div>
+        <div class="muted">Service clientèle 24/7</div>
+      </div>
+
+      <div class="features">
+        <div class="feature fade-up" data-animate>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 2L12 12" stroke="#0d6efd" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <h5>Guides experts</h5>
+          <p>Guides locaux formés et bilingues.</p>
+        </div>
+        <div class="feature fade-up" data-animate>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 2L12 12" stroke="#0d6efd" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <h5>Sécurité</h5>
+          <p>Protocoles sécurité et assurance voyage.</p>
+        </div>
+        <div class="feature fade-up" data-animate>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 2L12 12" stroke="#0d6efd" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <h5>Prix transparents</h5>
+          <p>Aucune surprise, paiement sécurisé.</p>
+        </div>
+        <div class="feature fade-up" data-animate>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 2L12 12" stroke="#0d6efd" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <h5>Support 24/7</h5>
+          <p>Assistance avant, pendant et après le voyage.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALES -->
+    <section id="avis" class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Témoignages</div>
+          <div class="section-sub">Ce que disent nos voyageurs</div>
+        </div>
+        <div class="muted">Plus de 5 000 avis vérifiés</div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div class="testimonials" id="testiList">
+          <div class="testimonial-card fade-up" data-animate>
+            <p>"Superbe expérience sur le Mont Cameroun — guide très professionnel et vue inoubliable."</p>
+            <div class="testimonial-meta">
+              <div class="avatar">AN</div>
+              <div>
+                <div class="meta-name">Anaïs N.</div>
+                <div class="meta-role">Voyageuse - Douala</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card fade-up" data-animate>
+            <p>"Organisation parfaite, hébergement confortable et activités variées."</p>
+            <div class="testimonial-meta">
+              <div class="avatar">PM</div>
+              <div>
+                <div class="meta-name">Paul M.</div>
+                <div class="meta-role">Famille - Yaoundé</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card fade-up" data-animate>
+            <p>"Randonnée et safari : deux expériences remarquables avec des guides passionnés."</p>
+            <div class="testimonial-meta">
+              <div class="avatar">LS</div>
+              <div>
+                <div class="meta-name">Léa S.</div>
+                <div class="meta-role">Photographe - Bafoussam</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- controls for testimonials -->
+        <div style="display:flex;flex-direction:column;gap:8px;align-self:center">
+          <button id="prevTesti" class="btn-secondary" aria-label="Témoignage précédent">‹</button>
+          <button id="nextTesti" class="btn-secondary" aria-label="Témoignage suivant">›</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / CTA -->
+    <section id="contact" class="section center">
+      <div class="section-title">Prêt à partir ?</div>
+      <div class="section-sub" style="margin-bottom:16px">Contactez-nous pour un devis personnalisé</div>
+
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:10px">
+        <a class="btn-primary" href="#">Parler à un conseiller</a>
+        <a class="btn-secondary" href="#">Demander un devis</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-grid">
+      <div>
+        <div style="font-weight:700;font-size:1.05rem">Cameroun Explorer</div>
+        <p style="margin-top:8px;color:rgba(255,255,255,0.9)">Voyages & excursions guidées — Découvrez le Cameroun autrement.</p>
+      </div>
+
+      <div>
+        <div style="font-weight:700;margin-bottom:8px">Liens utiles</div>
+        <ul style="list-style:none;color:rgba(255,255,255,0.95);line-height:1.9">
+          <li><a href="#" style="color:inherit">À propos</a></li>
+          <li><a href="#" style="color:inherit">Conditions</a></li>
+          <li><a href="#" style="color:inherit">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div style="font-weight:700;margin-bottom:8px">Suivez-nous</div>
+        <div class="socials">
+          <a href="#" aria-label="Facebook">Facebook</a><br>
+          <a href="#" aria-label="Instagram">Instagram</a><br>
+          <a href="#" aria-label="Twitter">Twitter</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="legal">&copy; <span id="year"></span> Cameroun Explorer. Tous droits réservés.</div>
+  </footer>
+
+  <!-- CHAT BUTTON -->
+  <button class="chat-btn" id="chatBtn" aria-label="Assistance en ligne">
+    
+    <span style="font-size:0.85rem;opacity:0.95">Besoin d'aide ?</span>
+  </button>
+
+  <!-- JS: interactions, animations, testimonials -->
+  <script>
+    // mise à jour année
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // mobile menu simple
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+    burger?.addEventListener('click', () => {
+      if(navLinks.style.display === 'flex') navLinks.style.display = 'none';
+      else navLinks.style.display = 'flex';
+    });
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href');
+        if(href.length>1){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      });
+    });
+
+    // Search form basic validation & message
+    const searchBtn = document.getElementById('searchBtn');
+    const searchMsg = document.getElementById('searchMsg');
+    searchBtn?.addEventListener('click', ()=>{
+      const dest = document.getElementById('destination').value.trim();
+      const depart = document.getElementById('date-depart').value;
+      const retour = document.getElementById('date-retour').value;
+      if(!dest){ showMsg('Veuillez indiquer une destination.'); return; }
+      if(!depart || !retour){ showMsg('Veuillez choisir les dates.'); return; }
+      if(depart > retour){ showMsg('La date de départ doit être antérieure à la date de retour.'); return; }
+      showMsg('Recherche en cours... (demo) — afficher les résultats correspondants.', true);
+      // ici tu peux appeler une API ou rediriger vers une page de résultats
+    });
+    function showMsg(txt, ok=false){ searchMsg.style.display='block'; searchMsg.style.color = ok? 'green':'#d9534f'; searchMsg.textContent = txt; setTimeout(()=>{ searchMsg.style.display='none' }, 5000) }
+
+    // Simple testimonial slider
+    (function(){
+      const list = document.getElementById('testiList');
+      const prev = document.getElementById('prevTesti');
+      const next = document.getElementById('nextTesti');
+      if(!list) return;
+      let offset = 0;
+      const step = 300; // px to scroll
+      next?.addEventListener('click', ()=> { offset += step; if(offset > list.scrollWidth) offset = 0; list.scrollTo({left:offset,behavior:'smooth'}); });
+      prev?.addEventListener('click', ()=> { offset -= step; if(offset < 0) offset = 0; list.scrollTo({left:offset,behavior:'smooth'}); });
+    }());
+
+    // Scroll animations with IntersectionObserver
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          entry.target.classList.remove('fade-up');
+        }
+      });
+    }, {threshold:0.12});
+    document.querySelectorAll('[data-animate]').forEach(el=>{
+      el.classList.add('fade-up');
+      observer.observe(el);
+    });
+
+    // Chat button
+    document.getElementById('chatBtn')?.addEventListener('click', ()=>{
+      alert('Bonjour 👋\nUn conseiller va vous répondre (demo). Vous pouvez intégrer ici un widget de chat réel.');
+    });
+
+    // Basic accessibility: keyboard skip to content on Home anchor
+    // (optional improvement)
+  </script>
 </body>
 </html>
