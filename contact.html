@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cameroun Explorer — Contact</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* -------------------- RESET -------------------- */
+    :root{
+      --blue:#0d6efd;       /* couleur principale */
+      --blue-dark:#0b5ed7;
+      --muted:#6c757d;
+      --bg:#f6f9ff;
+      --card:#ffffff;
+      --glass: rgba(255,255,255,0.06);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:'Poppins',sans-serif;
+      background:var(--bg);
+      color:#0b1a2b;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+    a{color:inherit; text-decoration: none;}
+    img{max-width:100%;display:block}
+
+    /* -------------------- NAVBAR -------------------- */
+    .navbar{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      height:68px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 28px;
+      z-index:1000;
+      background:linear-gradient(180deg, rgba(13,110,253,0.95), rgba(13,110,253,0.85));
+      color:white;
+      box-shadow:0 6px 18px rgba(13,110,253,0.08);
+      backdrop-filter: blur(6px);
+    }
+    .navbar .left{display:flex;gap:24px;align-items:center}
+    .logo{
+      font-weight:700;
+      font-size:1.25rem;
+      letter-spacing:0.2px;
+    }
+    .nav-links{display:flex;gap:18px;list-style:none;align-items:center}
+    .nav-links a{color:white;opacity:0.95;padding:8px 10px;border-radius:8px;font-weight:900}
+    .nav-links a:hover{background:rgba(255,255,255,0.08)}
+    .nav-cta{background:white;color:var(--blue);padding:8px 14px;border-radius:28px;font-weight:600;box-shadow:0 6px 14px rgba(13,110,253,0.12)}
+    .nav-cta:hover{transform:translateY(-2px);transition:all .18s ease-in-out}
+
+    /* mobile menu button */
+    .burger{display:none;width:40px;height:40px;border-radius:10px;align-items:center;justify-content:center;background:rgba(255,255,255,0.06);cursor:pointer}
+    .burger svg{fill:white}
+
+    /* -------------------- HERO (parallax-like) -------------------- */
+    .hero{
+      min-height:60vh;
+      background:
+        linear-gradient(180deg, rgba(3,37,76,0.45), rgba(3,37,76,0.55)),
+        url('bg.jpg') center/cover no-repeat fixed;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:100px 20px 60px;
+      color:white;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero .container{
+      width:100%;
+      max-width:1180px;
+      text-align:center;
+    }
+    .hero h1{
+      font-size:2.6rem;
+      line-height:1.05;
+      margin-bottom:12px;
+      font-weight:700;
+      text-shadow: 0 6px 28px rgba(2,30,75,0.6);
+    }
+    .hero p{color:rgba(255,255,255,0.92);margin-bottom:18px;font-weight:500;max-width:800px;margin-left:auto;margin-right:auto}
+
+    /* -------------------- SECTIONS -------------------- */
+    .section{
+      padding:72px 20px;
+      max-width:1180px;
+      margin:0 auto;
+    }
+    .section .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px;gap:16px}
+    .section-title{font-size:1.6rem;font-weight:700}
+    .section-sub{color:var(--muted);font-size:0.98rem}
+
+    /* Contact grid */
+    .contact-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:36px;
+      margin-top:18px;
+    }
+    .contact-info{background:var(--card);padding:24px;border-radius:12px;box-shadow:0 10px 30px rgba(11,26,43,0.06)}
+    .contact-info h3{font-size:1.3rem;margin-bottom:16px;color:var(--blue-dark)}
+    .contact-item{display:flex;gap:12px;margin-bottom:16px}
+    .contact-icon{width:40px;height:40px;background:rgba(13,110,253,0.08);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--blue);flex-shrink:0}
+    .contact-details h4{font-size:1rem;margin-bottom:4px}
+    .contact-details p{color:var(--muted);font-size:0.95rem}
+    .contact-form{background:var(--card);padding:24px;border-radius:12px;box-shadow:0 10px 30px rgba(11,26,43,0.06)}
+    .contact-form h3{font-size:1.3rem;margin-bottom:16px;color:var(--blue-dark)}
+    .form-group{margin-bottom:16px}
+    .form-group label{display:block;margin-bottom:6px;font-weight:600;font-size:0.9rem}
+    .form-control{width:100%;padding:12px;border:1px solid #e6f0ff;border-radius:8px;background:#f8fbff;font-family:inherit;font-size:0.95rem}
+    .form-control:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 2px rgba(13,110,253,0.2)}
+    textarea.form-control{min-height:120px;resize:vertical}
+    .btn-primary{
+      background:var(--blue);color:white;padding:12px 16px;border-radius:10px;font-weight:700;border:0;cursor:pointer;width:100%
+    }
+    .btn-primary:hover{background:var(--blue-dark)}
+
+    /* Map */
+    .map-container{
+      margin-top:36px;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 10px 30px rgba(11,26,43,0.06);
+      height:400px;
+    }
+    .map-placeholder{
+      background:linear-gradient(180deg, #e9f2ff, #d4e5ff);
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--blue);
+      font-weight:600;
+    }
+
+    /* Footer */
+    footer.site-footer{
+      background:linear-gradient(180deg,#05204d,#01233f);
+      color:white;padding:36px 20px;margin-top:30px;border-top-left-radius:20px;border-top-right-radius:20px;
+    }
+    .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;max-width:1180px;margin:0 auto}
+    .socials a{display:inline-block;margin-right:10px;color:white;opacity:0.95}
+    .legal{margin-top:16px;color:rgba(255,255,255,0.8);font-size:0.9rem;text-align:center}
+
+    /* Chat button */
+    .chat-btn{
+      position:fixed;right:18px;bottom:18px;background:var(--blue);color:white;padding:12px 14px;border-radius:999px;z-index:1200;cursor:pointer;font-weight:700;display:flex;gap:10px;align-items:center
+    }
+
+    /* small screens */
+    @media (max-width:980px){
+      .contact-grid{grid-template-columns:1fr}
+      .nav-links{display:none}
+      .burger{display:flex}
+      .footer-grid{grid-template-columns:1fr}
+    }
+
+    /* animations */
+    .fade-up{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
+    .fade-up.in{opacity:1;transform:none}
+
+    /* small utilities */
+    .muted{color:var(--card)}
+    .muted1{color:var(--muted); font-weight: 800;}
+    .center{text-align:center}
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar" role="banner">
+    <div class="left">
+      <div class="logo">Cameroun Explorer</div>
+      <div class="burger" id="burger" aria-hidden="true">
+        <!-- simple burger icon -->
+        <svg width="18" height="12" viewBox="0 0 18 12" xmlns="http://www.w3.org/2000/svg"><rect width="18" height="2" rx="1"></rect><rect y="5" width="18" height="2" rx="1"></rect><rect y="10" width="18" height="2" rx="1"></rect></svg>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="nav-links" id="navLinks" role="navigation" aria-label="Menu principal">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="a-propos.html">A propos</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </nav>
+
+    <a class="nav-cta" href="#">Réserver un voyage</a>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero" aria-label="Bannière Contact">
+      <div class="container">
+        <h1>Contactez-nous</h1>
+        <p>Notre équipe est à votre écoute pour répondre à toutes vos questions et vous aider à planifier votre voyage de rêve au Cameroun.</p>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Prenez contact avec nous</div>
+          <div class="section-sub">Nous répondons à toutes vos questions sous 24h</div>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info fade-up" data-animate>
+          <h3>Nos coordonnées</h3>
+          
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="contact-details">
+              <h4>Adresse</h4>
+              <p>123 Avenue de l'Indépendance<br>Douala, Cameroun</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 16.92V19.92C22 20.52 21.53 21 20.93 21H19.93C10.18 21 2 12.82 2 3.07V2.07C2 1.47 2.48 1 3.08 1H6.03C6.56 1 7 1.45 7 1.98C7 2.61 7.2 3.23 7.54 3.75L9.13 6.18C9.37 6.57 9.36 7.07 9.11 7.45C8.66 8.16 8.53 9.02 8.75 9.82C9.28 11.73 11 13.45 12.91 13.98C13.71 14.2 14.57 14.07 15.28 13.62C15.66 13.37 16.16 13.36 16.55 13.6L18.97 15.19C19.5 15.53 20.11 15.73 20.74 15.73C21.27 15.73 21.72 16.17 21.72 16.7L22 16.92Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="contact-details">
+              <h4>Téléphone</h4>
+              <p>+237 6XX XXX XXX<br>+237 6XX XXX XXX</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="contact-details">
+              <h4>Email</h4>
+              <p>info@camerounexplorer.cm<br>reservations@camerounexplorer.cm</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="contact-details">
+              <h4>Horaires d'ouverture</h4>
+              <p>Lun - Ven: 8h00 - 18h00<br>Sam: 9h00 - 16h00</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="contact-form fade-up" data-animate>
+          <h3>Envoyez-nous un message</h3>
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="name">Nom complet</label>
+              <input type="text" id="name" class="form-control" placeholder="Votre nom" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Adresse email</label>
+              <input type="email" id="email" class="form-control" placeholder="votre@email.com" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="subject">Sujet</label>
+              <input type="text" id="subject" class="form-control" placeholder="Sujet de votre message" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" class="form-control" placeholder="Décrivez votre demande..." required></textarea>
+            </div>
+            
+            <button type="submit" class="btn-primary">Envoyer le message</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="map-container fade-up" data-animate>
+        <div class="map-placeholder">
+          Carte interactive - Douala, Cameroun
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ RAPIDE -->
+    <section id="faq-rapide" class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Questions fréquentes</div>
+          <div class="section-sub">Trouvez rapidement des réponses à vos questions</div>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info fade-up" data-animate>
+          <h3>Réponses rapides</h3>
+          
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 12H16M12 8V16M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="contact-details">
+              <h4>Comment réserver ?</h4>
+              <p>Contactez-nous par téléphone, email ou via notre formulaire. Nous vous proposerons un devis personnalisé sous 24h.</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9.09 9C9.3251 8.33167 9.78915 7.76811 10.4 7.40913C11.0108 7.05016 11.7289 6.91894 12.4272 7.03871C13.1255 7.15849 13.7588 7.52152 14.2151 8.06353C14.6713 8.60553 14.9211 9.29152 14.92 10C14.92 12 11.92 13 11.92 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 17H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="contact-details">
+              <h4>Paiements et annulations</h4>
+              <p>Nous acceptons plusieurs modes de paiement. Notre politique d'annulation est flexible selon les conditions.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="contact-info fade-up" data-animate>
+          <h3>Besoin d'aide immédiate ?</h3>
+          
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="contact-details">
+              <h4>Urgences pendant le voyage</h4>
+              <p>Notre assistance 24h/24 est disponible au +237 6XX XXX XXX pour toute urgence pendant votre séjour.</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17 8H19C20.1046 8 21 8.89543 21 10V20C21 21.1046 20.1046 22 19 22H5C3.89543 22 3 21.1046 3 20V10C3 8.89543 3.89543 8 5 8H7M9 12H15M12 9V15M9 4H15V8H9V4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="contact-details">
+              <h4>Devis personnalisé</h4>
+              <p>Demandez un devis sur mesure pour votre voyage en groupe, familial ou en solo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-grid">
+      <div>
+        <div style="font-weight:700;font-size:1.05rem">Cameroun Explorer</div>
+        <p style="margin-top:8px;color:rgba(255,255,255,0.9)">Voyages & excursions guidées — Découvrez le Cameroun autrement.</p>
+      </div>
+
+      <div>
+        <div style="font-weight:700;margin-bottom:8px">Liens utiles</div>
+        <ul style="list-style:none;color:rgba(255,255,255,0.95);line-height:1.9">
+          <li><a href="a-propos.html" style="color:inherit">À propos</a></li>
+          <li><a href="#" style="color:inherit">Conditions</a></li>
+          <li><a href="#" style="color:inherit">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div style="font-weight:700;margin-bottom:8px">Suivez-nous</div>
+        <div class="socials">
+          <a href="#" aria-label="Facebook">Facebook</a><br>
+          <a href="#" aria-label="Instagram">Instagram</a><br>
+          <a href="#" aria-label="Twitter">Twitter</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="legal">&copy; <span id="year"></span> Cameroun Explorer. Tous droits réservés.</div>
+  </footer>
+
+  <!-- CHAT BUTTON -->
+  <button class="chat-btn" id="chatBtn" aria-label="Assistance en ligne">
+    <span style="font-size:0.85rem;opacity:0.95">Besoin d'aide ?</span>
+  </button>
+
+  <!-- JS: interactions, animations -->
+  <script>
+    // mise à jour année
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // mobile menu simple
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+    burger?.addEventListener('click', () => {
+      if(navLinks.style.display === 'flex') navLinks.style.display = 'none';
+      else navLinks.style.display = 'flex';
+    });
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href');
+        if(href.length>1){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      });
+    });
+
+    // Contact form submission
+    document.getElementById('contactForm')?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      alert('Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.');
+      document.getElementById('contactForm').reset();
+    });
+
+    // Scroll animations with IntersectionObserver
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          entry.target.classList.remove('fade-up');
+        }
+      });
+    }, {threshold:0.12});
+    document.querySelectorAll('[data-animate]').forEach(el=>{
+      el.classList.add('fade-up');
+      observer.observe(el);
+    });
+
+    // Chat button
+    document.getElementById('chatBtn')?.addEventListener('click', ()=>{
+      alert('Bonjour 👋\nUn conseiller va vous répondre (demo). Vous pouvez intégrer ici un widget de chat réel.');
+    });
+  </script>
+</body>
+</html>
